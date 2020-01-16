@@ -22,23 +22,41 @@ export default class AddPeople extends Component {
         e.preventDefault()
         let currentUser = localStorage.getItem("currentUser") || "";
         let currentTop = localStorage.getItem("currentTop");
+        let colorFilter = localStorage.getItem("colorFilter");
+        let colorVar = localStorage.getItem("colorVar");
         let id;
 
+        if(colorFilter == "true"){
+            axios.get("/api/get-tops/" + currentUser + "/" + colorVar).then(function (res) {
+                id = res.data[currentTop]._id;
+                console.log(id);
 
-        axios.get("/api/get-tops/" + currentUser).then(function (res) {
-            id = res.data[currentTop]._id;
-            console.log(id);
-
-            let dataToSend = {
-                peopleSeen: peopleVar
-            }
-            
-            axios.post("/api/add-people/" + id, dataToSend, {
-            }).then(res => {
-                console.log(res);
+                let dataToSend = {
+                    peopleSeen: peopleVar
+                }
                 
-            })
-        }).catch(err => console.log(err));
+                axios.post("/api/add-people/" + id, dataToSend, {
+                }).then(res => {
+                    console.log(res);
+                    
+                })
+            }).catch(err => console.log(err));
+        } else {
+            axios.get("/api/get-tops/" + currentUser).then(function (res) {
+                id = res.data[currentTop]._id;
+                console.log(id);
+
+                let dataToSend = {
+                    peopleSeen: peopleVar
+                }
+                
+                axios.post("/api/add-people/" + id, dataToSend, {
+                }).then(res => {
+                    console.log(res);
+                    
+                })
+            }).catch(err => console.log(err));
+        }
     }
 
 

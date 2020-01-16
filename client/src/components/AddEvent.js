@@ -22,26 +22,45 @@ export default class AddEvents extends Component {
         e.preventDefault()
         let currentUser = localStorage.getItem("currentUser") || "";
         let currentTop = localStorage.getItem("currentTop");
+        let colorFilter = localStorage.getItem("colorFilter");
+        let colorVar = localStorage.getItem("colorVar");
         let id;
 
+        if(colorFilter == "true"){
+            axios.get("/api/get-tops/" + currentUser + "/" + colorVar).then(function (res) {
+                id = res.data[currentTop]._id;
+                console.log(id);
 
-        axios.get("/api/get-tops/" + currentUser).then(function (res) {
-            id = res.data[currentTop]._id;
-            console.log(id);
+                let dataToSend = {
+                    events: eventVar
+                }
 
-            let dataToSend = {
-                events: eventVar
-            }
-
-            console.log(dataToSend);
+                console.log(dataToSend);
+                
+                axios.post("/api/add-event/" + id, dataToSend, {
+                }).then(res => {
+                    console.log(res);
             
-            axios.post("/api/add-event/" + id, dataToSend, {
-            }).then(res => {
-                console.log(res);
-        
-            })
-        }).catch(err => console.log(err));
-        
+                })
+            }).catch(err => console.log(err));
+        } else {
+            axios.get("/api/get-tops/" + currentUser).then(function (res) {
+                id = res.data[currentTop]._id;
+                console.log(id);
+
+                let dataToSend = {
+                    events: eventVar
+                }
+
+                console.log(dataToSend);
+                
+                axios.post("/api/add-event/" + id, dataToSend, {
+                }).then(res => {
+                    console.log(res);
+            
+                })
+            }).catch(err => console.log(err));
+        }
     }
 
 
