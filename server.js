@@ -4,6 +4,7 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     dbConfig = require('./database/db');
     path = require('path');
+    router = require("express").Router();
 
 const api = require('./routes/item.routes')
 
@@ -36,7 +37,7 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
-app.get("/", function(req, res) {
+router.get("/", function(req, res) {
     res.json(path.join(__dirname, "public/index.html"));
   });
 
