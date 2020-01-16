@@ -43,7 +43,10 @@ app.use('/api', api);
 app.use('/', routes);
 
 //Connect to Mongo DB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/closetItems');
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/closetItems', {
+         useNewUrlParser: true,
+         useUnifiedTopology: true
+     }).then(() => {console.log('Database successfully connected')})
 
 app.listen(port, () => {
     console.log('Connected to port ' + port)
