@@ -1,0 +1,9 @@
+#brandLink {
+    cursor: pointer;
+    width: 200px;
+    height: auto;
+}
+
+label {
+    color: black;
+}
