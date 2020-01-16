@@ -6,7 +6,7 @@ let express = require('express'),
     path = require('path');
 
 const api = require('./routes/item.routes')
-const nonApi = require("./client/public/index.html");
+
 
 // MongoDB Configuration
 mongoose.Promise = global.Promise;
@@ -31,7 +31,10 @@ app.use(cors());
 app.use('/public', express.static('public'));
 
 app.use('/api', api);
-app.use('/', nonApi);
+
+app.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
 
 
 const port = process.env.PORT || 4000;
@@ -40,18 +43,18 @@ const server = app.listen(port, () => {
 })
 
 
-app.use((req, res, next) => {
-    // Error goes via `next()` method
-    setImmediate(() => {
-        next(new Error('Something went wrong'));
-    });
-});
+// app.use((req, res, next) => {
+//     // Error goes via `next()` method
+//     setImmediate(() => {
+//         next(new Error('Something went wrong'));
+//     });
+// });
 
-app.use(function (err, req, res, next) {
-    console.error(err.message);
-    if (!err.statusCode) err.statusCode = 500;
-    res.status(err.statusCode).send(err.message);
-});
+// app.use(function (err, req, res, next) {
+//     console.error(err.message);
+//     if (!err.statusCode) err.statusCode = 500;
+//     res.status(err.statusCode).send(err.message);
+// });
 
 
 //Changes to Server done after this
