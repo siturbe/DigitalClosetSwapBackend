@@ -11,17 +11,17 @@ const port = process.env.PORT || 4000;
 const routes = require('./routes');
 
 // MongoDB Configuration
-mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Database sucessfully connected')
-},
-    error => {
-        console.log('Database could not be connected: ' + error)
-    }
-)
+// mongoose.Promise = global.Promise;
+// mongoose.connect(dbConfig.db, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// }).then(() => {
+//     console.log('Database sucessfully connected')
+// },
+//     error => {
+//         console.log('Database could not be connected: ' + error)
+//     }
+// )
 
 
 //Serve up static assets
@@ -42,7 +42,8 @@ app.use('/public', express.static('public'));
 app.use('/api', api);
 app.use('/', routes);
 
-
+//Connect to Mongo DB
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/closetItems');
 
 app.listen(port, () => {
     console.log('Connected to port ' + port)
