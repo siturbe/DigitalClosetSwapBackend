@@ -3,6 +3,7 @@ let express = require('express'),
     cors = require('cors'),
     bodyParser = require('body-parser'),
     dbConfig = require('./database/db');
+    path = require('path');
 
 const api = require('./routes/item.routes')
 
@@ -34,6 +35,10 @@ const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
+
+app.use("/", function(req, res) {
+    res.json(path.join(__dirname, "public/index.html"));
+  });
 
 app.use((req, res, next) => {
     // Error goes via `next()` method
