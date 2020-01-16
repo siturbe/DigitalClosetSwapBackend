@@ -6,7 +6,9 @@ let express = require('express'),
     path = require('path');
 
 const api = require('./routes/item.routes')
-
+const app = express();
+const port = process.env.PORT || 4000;
+const routes = require('./routes');
 
 // MongoDB Configuration
 mongoose.Promise = global.Promise;
@@ -21,24 +23,28 @@ mongoose.connect(dbConfig.db, {
     }
 )
 
-const app = express();
+
+//Serve up static assets
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/public"));
+  }
+
+//Define middleware
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
 
+
+//Add routes
 app.use('/public', express.static('public'));
-
 app.use('/api', api);
-
-app.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-  });
+app.use('/', routes);
 
 
-const port = process.env.PORT || 4000;
-const server = app.listen(port, () => {
+
+app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
