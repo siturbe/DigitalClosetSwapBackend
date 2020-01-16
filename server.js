@@ -37,8 +37,8 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
-router.get("/", function(req, res) {
-    res.json(path.join(__dirname, "public/index.html"));
+router.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/public/index.html"));
   });
 
 app.use((req, res, next) => {
