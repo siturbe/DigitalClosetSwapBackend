@@ -4,7 +4,6 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     dbConfig = require('./database/db');
     path = require('path');
-    router = require("express").Router();
 
 const api = require('./routes/item.routes')
 
@@ -31,15 +30,15 @@ app.use(cors());
 app.use('/public', express.static('public'));
 
 app.use('/api', api)
+app.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/public/index.html"));
+  });
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
-router.use(function(req, res) {
-    res.sendFile(path.join(__dirname, "../client/public/index.html"));
-  });
 
 app.use((req, res, next) => {
     // Error goes via `next()` method
