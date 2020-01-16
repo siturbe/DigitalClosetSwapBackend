@@ -6,6 +6,7 @@ let express = require('express'),
     path = require('path');
 
 const api = require('./routes/item.routes')
+const nonApi = require("./client/public/index.html");
 
 // MongoDB Configuration
 mongoose.Promise = global.Promise;
@@ -29,7 +30,8 @@ app.use(cors());
 
 app.use('/public', express.static('public'));
 
-app.use('/api', api)
+app.use('/api', api);
+app.use('/', nonApi);
 
 
 const port = process.env.PORT || 4000;
