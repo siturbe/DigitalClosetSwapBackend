@@ -31,10 +31,6 @@ app.use('/public', express.static('public'));
 
 app.use('/api', api)
 
-app.get("/", function(req, res) {
-    res.json(path.join(__dirname, "./client/public/index.html"));
-  });
-
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
