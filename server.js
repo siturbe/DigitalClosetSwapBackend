@@ -36,7 +36,7 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 
-app.use("/", function(req, res) {
+app.get("/", function(req, res) {
     res.json(path.join(__dirname, "public/index.html"));
   });
 
