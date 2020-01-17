@@ -56,14 +56,14 @@ router.post('/item-profile', upload.single('profileImg'), (req, res, next) => {
     })
 })
 
-router.get("/", (req, res, next) => {
-    Item.find().then(data => {
-        res.status(200).json({
-            message: "Item list retrieved successfully!",
-            items: data
-        });
-    });
-});
+// router.get("/", (req, res, next) => {
+//     Item.find().then(data => {
+//         res.status(200).json({
+//             message: "Item list retrieved successfully!",
+//             items: data
+//         });
+//     });
+// });
 
 
 //GARMENT MODEL================================================================
