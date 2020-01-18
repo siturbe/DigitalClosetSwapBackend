@@ -7,7 +7,11 @@ import { Auth0Provider } from './contexts/auth0-context';
 
 ReactDOM.render(
     <Auth0Provider
-    // audience={'https://enigmatic-chamber-52603.herokuapp.com/'}
+        domain={process.env.REACT_AUTH0_DOMAIN}
+        client_id={process.env.REACT_AUTH0_CLIENT_ID}
+        redirect_uri={window.location.origin}
+        audience={'https://enigmatic-chamber-52603.herokuapp.com/'}
+    
     >
         <App />
     </Auth0Provider>, 
